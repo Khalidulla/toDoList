@@ -4,13 +4,9 @@ const taskInput = document.querySelector("#taskInput");
 const tasksList = document.querySelector("#tasksList");
 const emptyList = document.querySelector("#emptyList");
 
-//Добавление задач
 form.addEventListener("submit", addTask);
-
-//Удаление задачи
 tasksList.addEventListener("click", deleteTask);
-//Выполнение задачи
-tasksList.addEventListener('click', doneTask)
+tasksList.addEventListener("click", doneTask);
 
 function addTask(event) {
   //предотвращает перезагрузку страницы
@@ -42,23 +38,24 @@ function addTask(event) {
 }
 
 function deleteTask(event) {
-  //Проводим что клик был по кнопке "удалить задачу"
-  if (event.target.dataset.action === "delete") {
-    console.log("DELETE!");
-    const parentNode = event.target.closest('.list-group-item');
-    parentNode.remove()
-  }
+  //Проводим если клик был НЕ по кнопке "удалить задачу"
+  if (event.target.dataset.action !== "delete") return;
+
+  //проверяем что клик был по кнопке "удалить задачу"
+    const parentNode = event.target.closest(".list-group-item");
+    parentNode.remove();
   //Проверка
   if (tasksList.children.length === 1) {
     emptyList.classList.remove("none");
-}
+  }
 }
 
 function doneTask(event) {
-   //проверка что клик был по кнопке "задача выполнена"
-   if (event.target.dataset.action === 'done'){
-      const parentNode = event.target.closest('.list-group-item');
-      const taskTitle = parentNode.querySelector('.task-title')
-      taskTitle.classList.toggle('task-title--done');
-   }
-}
+  //проверка что клик был НЕ по кнопке "задача выполнена"
+  if (event.target.dataset.action === "done") return;
+
+  //проверка что клик был по кнопке "задача выполнена"
+    const parentNode = event.target.closest(".list-group-item");
+    const taskTitle = parentNode.querySelector(".task-title");
+    taskTitle.classList.toggle("task-title--done");
+  }
